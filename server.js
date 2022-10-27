@@ -120,14 +120,14 @@ const allEmployees = () => {
     SELECT e.id, 
     e.first_name, 
     e.last_name, 
-    roles.role_title AS title, 
-    departments.department_name AS department,
-    roles.role_salary AS salary, 
-    CONCAT (manager.first_name, " ", manager.last_name) AS manager
+    r.role_title AS title, 
+    d.department_name AS department,
+    r.role_salary AS salary, 
+    CONCAT (m.first_name, " ", m.last_name) AS manager
     FROM employees e
-    LEFT JOIN roles ON e.role_id = roles.id
-    LEFT JOIN departments ON roles.department_id = departments.id
-    LEFT JOIN employees manager ON e.manager_id = manager.id
+    LEFT JOIN roles r ON e.role_id = r.id
+    LEFT JOIN departments d ON r.department_id = d.id
+    LEFT JOIN employees m ON e.manager_id = m.id
   `;
 
   db.query(sql, (err, rows) => {
