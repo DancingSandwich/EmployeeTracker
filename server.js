@@ -102,7 +102,7 @@ const allRoles = () => {
   console.log('Showing all roles...\n');
 
   const sql = `
-    SELECT r.id, r.role_title as title, d.department_namej as department, r.role_salary as salary
+    SELECT r.id, r.role_title as title, d.department_name as department, r.role_salary as salary
     FROM roles r
     LEFT JOIN departments d ON r.department_id = d.id
   `;
@@ -117,17 +117,17 @@ const allRoles = () => {
 const allEmployees = () => {
   console.log('Showing all employees...\n');
   const sql = `
-    SELECT employees.id, 
-    employees.first_name, 
-    employees.last_name, 
+    SELECT e.id, 
+    e.first_name, 
+    e.last_name, 
     roles.role_title AS title, 
     departments.department_name AS department,
     roles.role_salary AS salary, 
     CONCAT (manager.first_name, " ", manager.last_name) AS manager
-    FROM employees
-    LEFT JOIN roles ON employees.role_id = roles.id
+    FROM employees e
+    LEFT JOIN roles ON e.role_id = roles.id
     LEFT JOIN departments ON roles.department_id = departments.id
-    LEFT JOIN employees manager ON employees.manager_id = manager.id
+    LEFT JOIN employees manager ON e.manager_id = manager.id
   `;
 
   db.query(sql, (err, rows) => {
